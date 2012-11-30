@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>maven-plugin-lib</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.2</version>
+    <name>Maven plugin library</name>
+    <description>Library for maven ajkaandrej plugin.</description>
+
+    <!-- Project parent -->
+    <parent>
+        <groupId>com.ajkaandrej.maven</groupId>
+        <artifactId>maven-plugin-parent</artifactId>
+        <version>1.0.1</version>
+    </parent>
+
+    <!-- Project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+       <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+        </dependency>
+    </dependencies>
+</project>
