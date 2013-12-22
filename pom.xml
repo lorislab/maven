@@ -2,14 +2,19 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ajkaandrej.maven</groupId>
+    <groupId>org.lorislab.maven</groupId>
     <artifactId>maven-plugin-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0.1</version>
-    <name>Maven plugin parent</name>
-    <description>Parent for maven ajkaandrej plugin.</description>
-    <url>http://www.ajka-andrej.com</url>
+    <name>Maven plugins parent</name>
+    <description>Parent for maven lorislab plugins.</description>
+    <url>http://www.lorislab.org</url>
     
+	<modules>
+		<module>maven-plugin-lib</module>
+		<module>messagebundle-plugin</module>
+	</modules>
+	
     <prerequisites>
         <maven>2.2.1</maven>
     </prerequisites>
@@ -24,9 +29,8 @@
     <developers>
         <developer>
             <id>andrej</id>
-            <email>andrej@ajka-andrej.com</email>
+            <email>andrej@lorislab.org</email>
             <organization>Ajka-Andrej</organization>
-            <url>http://www.ajka-andrej.com</url>
         </developer>
     </developers>
         

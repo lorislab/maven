@@ -10,9 +10,10 @@
 
     <!-- Project parent -->
     <parent>
-        <groupId>com.ajkaandrej.maven</groupId>
-        <artifactId>maven-plugin-parent</artifactId>
+		<groupId>org.lorislab.maven</groupId>
+		<artifactId>maven-plugin-parent</artifactId>
         <version>1.0.1</version>
+		<relativePath>../</relativePath>
     </parent>
 
     <dependencies>

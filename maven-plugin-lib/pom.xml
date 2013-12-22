@@ -6,13 +6,14 @@
     <packaging>jar</packaging>
     <version>0.0.2</version>
     <name>Maven plugin library</name>
-    <description>Library for maven ajkaandrej plugin.</description>
+    <description>Library for maven lorislab plugins.</description>
 
     <!-- Project parent -->
     <parent>
-        <groupId>com.ajkaandrej.maven</groupId>
-        <artifactId>maven-plugin-parent</artifactId>
+		<groupId>org.lorislab.maven</groupId>
+		<artifactId>maven-plugin-parent</artifactId>
         <version>1.0.1</version>
+		<relativePath>../</relativePath>
     </parent>
 
     <!-- Project dependencies -->

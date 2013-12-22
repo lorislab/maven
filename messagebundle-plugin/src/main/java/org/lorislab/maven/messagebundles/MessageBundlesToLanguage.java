@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ajkaandrej.maven.messagebundles;
+package org.lorislab.maven.messagebundles;
 
 import com.ajkaandrej.maven.plugin.utils.FileDirectoryUtils;
 import com.ajkaandrej.maven.plugin.utils.ProjectUtils;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
- * The message bundles to default plug-in.
- * @goal default
+ * The message bundle to language plug-in.
+ * @goal language
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class MessageBundlesToDefault extends MessageBundlesPlugin {
+public class MessageBundlesToLanguage extends MessageBundlesPlugin {
 
     /**
      * Plug-in main method.
@@ -45,7 +46,7 @@ public class MessageBundlesToDefault extends MessageBundlesPlugin {
 
         DirectoryScanner scanner = new DirectoryScanner();
         scanner.setBasedir(sourceDirectory);
-        scanner.setIncludes(createIncludesFilesWithLanguage());
+        scanner.setIncludes(createIncludesFilesWithoutLanguage());
         scanner.addDefaultExcludes();
 
         try {
@@ -61,17 +62,43 @@ public class MessageBundlesToDefault extends MessageBundlesPlugin {
         }
 
         for (String item : paths) {
-            File file = getFileFromDirectory(sourceDirectory, item);
-            File result = getFileFromDirectory(outputDirectory, removeLanguage(item));
-            try {
-                if (FileDirectoryUtils.copyFileIfChanged(file, result)) {
-                    getLog().info("File: " + result.toString());
-                } else {
-                    getLog().warn("Unabled to copy file: " + file + " to file: " + result);
+            if (checkLanguage(item)) {
+                File file = getFileFromDirectory(sourceDirectory, item);
+                File result = getFileFromDirectory(outputDirectory, addLanguage(item));
+                try {
+                    if (FileDirectoryUtils.copyFileIfChanged(file, result)) {
+                        getLog().info("File: " + result.toString());
+                    } else {
+                        getLog().info("No changies found in the file: " + file);
+                    }
+                } catch (IOException ex) {
+                    throw new MojoExecutionException("Error by copy the file.", ex);
                 }
-            } catch (IOException ex) {
-                throw new MojoExecutionException("Error by copy the file.", ex);
             }
         }
+    }
+
+    /**
+     * Check the langauge in the file name.
+     *
+     * @param fileName the name of the file.
+     * @return returns <code>true</code> for files without the language
+     * else <code>false</code>
+     */
+    private boolean checkLanguage(String fileName) {
+        int index = fileName.lastIndexOf("_");
+        if (index != -1) {
+            int index2 = fileName.lastIndexOf(".");
+            if (index2 != -1) {
+                String lang = fileName.substring(index + 1, index2);
+                if (lang.length() == 2) {
+                    Locale loc = new Locale(lang);
+                    if (!lang.equals(loc.getDisplayLanguage())) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
