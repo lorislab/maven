@@ -15,13 +15,14 @@
  */
 package org.lorislab.maven.messagebundles;
 
-import com.ajkaandrej.maven.plugin.utils.FileDirectoryUtils;
-import com.ajkaandrej.maven.plugin.utils.ProjectUtils;
+
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.lorislab.maven.plugin.utils.FileDirectoryUtils;
+import org.lorislab.maven.plugin.utils.ProjectUtils;
 
 /**
  * The message bundles to default plug-in.

@@ -4,7 +4,6 @@
 
     <artifactId>maven-plugin-lib</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.2</version>
     <name>Maven plugin library</name>
     <description>Library for maven lorislab plugins.</description>
 
@@ -12,7 +11,7 @@
     <parent>
 		<groupId>org.lorislab.maven</groupId>
 		<artifactId>maven-plugin-parent</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
     </parent>
 

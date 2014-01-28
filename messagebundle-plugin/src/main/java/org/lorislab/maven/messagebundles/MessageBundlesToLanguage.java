@@ -15,8 +15,8 @@
  */
 package org.lorislab.maven.messagebundles;
 
-import com.ajkaandrej.maven.plugin.utils.FileDirectoryUtils;
-import com.ajkaandrej.maven.plugin.utils.ProjectUtils;
+import org.lorislab.maven.plugin.utils.FileDirectoryUtils;
+import org.lorislab.maven.plugin.utils.ProjectUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;

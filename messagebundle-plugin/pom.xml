@@ -4,7 +4,7 @@
 
     <artifactId>messagebundles-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.0.2</version>
+
     <name>Message Bundle plugin</name>
     <description>This plugin copy messsage bundle language - default.</description>
 
@@ -12,7 +12,7 @@
     <parent>
 		<groupId>org.lorislab.maven</groupId>
 		<artifactId>maven-plugin-parent</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
     </parent>
 
@@ -22,9 +22,9 @@
             <artifactId>maven-plugin-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ajkaandrej.maven</groupId>
+            <groupId>org.lorislab.maven</groupId>
             <artifactId>maven-plugin-lib</artifactId>
-            <version>0.0.2</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>

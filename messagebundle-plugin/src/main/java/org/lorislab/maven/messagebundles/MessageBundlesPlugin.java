@@ -15,8 +15,8 @@
  */
 package org.lorislab.maven.messagebundles;
 
-import com.ajkaandrej.maven.plugin.AbstractMavenPlugin;
 import java.io.File;
+import org.lorislab.maven.plugin.AbstractMavenPlugin;
 
 /**
  * Abstract class for message bundle plug-in.
