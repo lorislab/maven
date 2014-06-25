@@ -20,15 +20,23 @@ import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Execute;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.lorislab.maven.plugin.utils.FileDirectoryUtils;
 import org.lorislab.maven.plugin.utils.ProjectUtils;
 
 /**
  * The message bundles to default plug-in.
- * @goal default
+ * 
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
+@Mojo(name = "default",
+        defaultPhase = LifecyclePhase.PROCESS_RESOURCES,
+        requiresProject = true,
+        threadSafe = true)
+@Execute(goal = "default", phase = LifecyclePhase.PROCESS_RESOURCES)
 public class MessageBundlesToDefault extends MessageBundlesPlugin {
 
     /**

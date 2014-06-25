@@ -16,6 +16,7 @@
 package org.lorislab.maven.messagebundles;
 
 import java.io.File;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.lorislab.maven.plugin.AbstractMavenPlugin;
 
 /**
@@ -47,25 +48,21 @@ public abstract class MessageBundlesPlugin extends AbstractMavenPlugin {
 
     /**
      * Packaging type of project
-     *
-     * @parameter expression="${project.packaging}"
-     * @readonly
      */
+    @Parameter(readonly = true, defaultValue = "${project.packaging}")
     protected String packaging;
 
     /**
      * Language for message bundles.
-     *
-     * @parameter default-value="en"
      */
+    @Parameter(defaultValue = "en")
     protected String language;
 
     /**
      * MessageBundles file without extension.
      * Default packaging value = *Bundle.
-     *
-     * @parameter
      */
+    @Parameter
     protected String[] files = new String[] {"*Bundle"};
 
     /**
@@ -74,20 +71,19 @@ public abstract class MessageBundlesPlugin extends AbstractMavenPlugin {
      *
      * @parameter
      */
+    @Parameter
     protected String[] packagings = new String[] {"jar", "war"};
 
     /**
      * Source directory.
-     *
-     * @parameter expression="${project.build.sourceDirectory}"
      */
+    @Parameter(defaultValue = "${project.build.sourceDirectory}")
     protected File sourceDirectory;
 
     /**
      * Output directory.
-     *
-     * @parameter expression="${project.build.outputDirectory}"
      */
+    @Parameter(defaultValue = "${project.build.outputDirectory}")
     protected File outputDirectory;
     
     /**
@@ -157,7 +153,7 @@ public abstract class MessageBundlesPlugin extends AbstractMavenPlugin {
     /**
      * Create includes array without the language in the filename.
      *
-     * @return new includes array without laguage in the filename.
+     * @return new includes array without language in the filename.
      */
     protected String[] createIncludesFilesWithoutLanguage() {
         String[] result = new String[files.length];

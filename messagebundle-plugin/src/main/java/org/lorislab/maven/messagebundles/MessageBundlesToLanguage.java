@@ -22,13 +22,21 @@ import java.io.IOException;
 import java.util.Locale;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Execute;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
  * The message bundle to language plug-in.
- * @goal language
+ * 
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
+@Mojo(name = "language",
+        defaultPhase = LifecyclePhase.PROCESS_RESOURCES,
+        requiresProject = true,
+        threadSafe = true)
+@Execute(goal = "language", phase = LifecyclePhase.PROCESS_RESOURCES)
 public class MessageBundlesToLanguage extends MessageBundlesPlugin {
 
     /**
