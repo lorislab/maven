@@ -17,16 +17,15 @@ package org.lorislab.maven.jboss.server;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.maven.plugin.AbstractMojo;
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.codehaus.plexus.util.FileUtils;
+import org.apache.maven.project.MavenProject;
 import org.lorislab.maven.plugin.AbstractMavenPlugin;
 
 /**
@@ -59,6 +58,18 @@ public class DeploymentMojo extends AbstractMavenPlugin {
     protected File deployFile;
 
     /**
+     * The directory to deploy.
+     */
+    @Parameter(defaultValue = "${project.build.directory}/${project.build.finalName}", required = true)
+    protected File deployDir;
+        
+    /**
+     * The directory name in the deploy directory.
+     */
+    @Parameter(defaultValue = "${project.build.finalName}.${project.packaging}", required = true)
+    protected String targetDirName;    
+    
+    /**
      * The JBOSS server directory.
      */
     @Parameter(property = "org.lorislab.maven.jboss.server.dir")
@@ -70,6 +81,12 @@ public class DeploymentMojo extends AbstractMavenPlugin {
     @Parameter(defaultValue = "false")
     private boolean exploded = false;
 
+    /**
+     * The MAVEN project.
+     */
+    @Component
+    protected MavenProject project;
+    
     /**
      * The deploy the file to the server.
      *
@@ -92,23 +109,43 @@ public class DeploymentMojo extends AbstractMavenPlugin {
         }
 
         File profileDir = new File(jbossDir, profile);
-        File deployDir = new File(profileDir, DEPLOY_DIR);
+        File targetDir = new File(profileDir, DEPLOY_DIR);
 
-        if (!deployDir.exists()) {
-            throw new MojoFailureException("The JBOSS deployment directory does not exists! Path: " + deployDir.getAbsolutePath());
+        if (!targetDir.exists()) {
+            throw new MojoFailureException("The JBOSS deployment directory does not exists! Path: " + targetDir.getAbsolutePath());
         }
 
         if (exploded) {
-            throw new MojoFailureException("Not supported functionality");
+            try {
+                getLog().info("Deploy the directory: " + targetDirName + " to the server: " + targetDir.getAbsolutePath());                                     
+
+                File target = new File(targetDir, targetDirName);
+                
+                FileUtils.deleteDirectory(target);
+                
+                // create target directory
+                if (!target.exists()) {
+                    target.mkdir();
+                }
+                
+                // copy directory
+                FileUtils.copyDirectoryToDirectory(deployDir, target);
+                
+                // redeploy the application
+                FileUtils.touch(new File(targetDir, targetDirName + ".dodeploy"));
+            } catch (IOException ex) {
+                throw new MojoExecutionException("Error to copy the deploy final " + deployFile.getAbsolutePath(), ex);
+            }
         } else {
             try {
-                getLog().info("Deploy the file: " + deployFile.getAbsolutePath() + " to the server: " + deployDir.getAbsolutePath());                
-                FileUtils.copyFileToDirectory(deployFile, deployDir);
-                getLog().info("Deployed finished!");
+                getLog().info("Deploy the file: " + deployFile.getAbsolutePath() + " to the server: " + targetDir.getAbsolutePath());                
+                FileUtils.copyFileToDirectory(deployFile, targetDir);                
             } catch (IOException ex) {
                 throw new MojoExecutionException("Error to copy the deploy final " + deployFile.getAbsolutePath(), ex);
             }
         }
+        
+        getLog().info("Deployed finished!");
     }
 
 }
