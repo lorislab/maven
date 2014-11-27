@@ -56,8 +56,11 @@ public class SynchronizeWebModuleMojo extends AbstractServerMavenPlugin {
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         File targetDir = getTargetDir();
-        File earTargetDir = new File(targetDir, ear + EAR_EXT );
-        File webTargetDir = new File(earTargetDir, targetDirName);
+        if (ear != null) {
+            File earTargetDir = new File(targetDir, ear + EAR_EXT );
+            targetDir = new File(earTargetDir, targetDirName);
+        } 
+        File webTargetDir = new File(targetDir, targetDirName);
         getLog().info("Synchronise the directory: " + deployDir + " to the server: " + webTargetDir.getAbsolutePath());    
         
         try {
