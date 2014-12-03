@@ -63,8 +63,7 @@ public class SynchronizeWebModuleMojo extends AbstractServerMavenPlugin {
 
         File targetDir = getTargetDir();
         if (ear != null) {
-            File earTargetDir = new File(targetDir, ear + EAR_EXT );
-            targetDir = new File(earTargetDir, targetDirName);
+            targetDir = new File(targetDir, ear + EAR_EXT );
         } 
         File webTargetDir = new File(targetDir, targetDirName);
         getLog().info("Synchronise the directory: " + deployDir + " to the server: " + webTargetDir.getAbsolutePath());    
