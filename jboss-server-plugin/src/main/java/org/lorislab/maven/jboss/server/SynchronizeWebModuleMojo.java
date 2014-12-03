@@ -47,6 +47,12 @@ public class SynchronizeWebModuleMojo extends AbstractServerMavenPlugin {
     private String ear;
 
     /**
+     * The touch flag.
+     */
+    @Parameter(defaultValue = "false")
+    private boolean touch = false;
+    
+    /**
      * The synchronise the web directory.
      *
      * @throws MojoExecutionException if the method fails.
@@ -66,6 +72,15 @@ public class SynchronizeWebModuleMojo extends AbstractServerMavenPlugin {
         try {
             FileUtils.copyDirectoryStructureIfModified(deployDir, webTargetDir);
             getLog().info("Synhronise finished!");
+            
+            if (touch) {
+                String deployName = targetDirName;
+                if (ear != null) {
+                    deployName = ear + EAR_EXT;
+                }
+                org.apache.commons.io.FileUtils.touch(new File(getTargetDir(), deployName + ".dodeploy"));
+                getLog().info("Redeploy the application finished!");
+            }
         } catch (IOException ex) {
             throw new MojoExecutionException("Error to synchronise the web project. " + deployFile.getAbsolutePath(), ex);
         }
