@@ -31,10 +31,11 @@ import org.lorislab.maven.plugin.AbstractMavenPlugin;
 public abstract class AbstractServerMavenPlugin extends AbstractMavenPlugin {
 
     /**
-     * The deployment directory.
+     * The JBOSS deployments directory.
      */
-    protected static final String DEPLOY_DIR = "deployments";
-
+    @Parameter(defaultValue = "deployments", property = "org.lorislab.maven.jboss.server.deployments")
+    protected String deployments = "deployments";
+    
     /**
      * The JBOSS profile.
      */
@@ -94,7 +95,7 @@ public abstract class AbstractServerMavenPlugin extends AbstractMavenPlugin {
         }
 
         File profileDir = new File(jbossDir, profile);
-        File targetDir = new File(profileDir, DEPLOY_DIR);
+        File targetDir = new File(profileDir, deployments);
 
         if (!targetDir.exists()) {
             throw new MojoFailureException("The JBOSS deployment directory does not exists! Path: " + targetDir.getAbsolutePath());
